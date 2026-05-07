@@ -4,12 +4,17 @@
   "description": "backend Schema",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev":"nodemon -r dotenv/config --experimental-json-modules src/index.js"
   },
-  "author": "",
+  "author": "Ishan Das",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^3.1.14",
     "prettier": "^3.8.3"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mongoose": "^9.6.1"
   }
 }
