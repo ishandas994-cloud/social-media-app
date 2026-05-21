@@ -14,4 +14,11 @@ app.use(express.urlencoded({extended:true,limit:"16kb"}))
 app.use(express.static("public"))
 app.use(cookieParser())
 
-  export { app }
+
+
+import userrouter from "./rouths/user.rouths.js"
+
+
+app.use("/user",userrouter);
+
+export { app }
