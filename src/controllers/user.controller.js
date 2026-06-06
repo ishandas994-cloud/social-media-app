@@ -2,6 +2,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { user } from "../models/user.model.js";
 import { uploadResult } from "../utils/cloudnary.js";
+import { ApiResponse } from "../utils/ApiResponse.js";
 
 const registeruser = asyncHandler(async (req, res) => {
     const { username, email, fullname, password } = req.body
@@ -26,6 +27,32 @@ const registeruser = asyncHandler(async (req, res) => {
     if (!localpath) {
         throw new ApiError(409, "avater file is must required:");
     }
+    const avatar=await uploadonCloudnary(localpath)
+    const coverImage =await uploadonCloudnary(localimagepath)
+
+    if(!avatar){
+        throw new ApiError (409,"avater must required:");
+    }
+     const user = await User.create({
+        fullname,
+        avatar:avatar.url,
+        coverImage:coverImage?.url||"",
+        email,
+        password,
+        username:username.toLowercase()
+    })
+
+  const createuser = await  User.findById(user._id).select(
+    "-password -refracetoken"
+  )
+
+  if(!createuser){
+    throw new ApiError (500,"some servererror is coming :");
+  }
+  return res.status(201).json(
+    new ApiResponse(200,createuser,"user registered succesfully:")
+  )
+
 });
 
 export { registeruser };
