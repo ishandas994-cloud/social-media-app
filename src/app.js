@@ -17,5 +17,18 @@ app.use(cookieParser());
 import userrouter from "./rouths/user.rouths.js";
 
 app.use("/user", userrouter);
+app.get("/", (req, res) => {
+  res.send("Backend running successfully");
+});
 
+
+//for postman
+app.use(express.json());
+
+app.post("/register", (req, res) => {
+
+    console.log(req.body);
+
+    res.send("Data received");
+}); 
 export default app;
